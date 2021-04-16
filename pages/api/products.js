@@ -1,7 +1,9 @@
 import initDB from '../../helpers/initDB';
-
+import Product from '../../models/Product';
 initDB();
 
 export default (req, res) => {
-  res.status(200).json({ name: 'John Doe' })
+	Product.find().then((products) => {
+		res.status(200).send(products)
+	})
 }
