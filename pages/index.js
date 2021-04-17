@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import baseURL from '../helpers/baseURL'
 
 
 const Home = ({products}) => {
@@ -12,7 +12,7 @@ const Home = ({products}) => {
 					<span className="card-title black-text">{product.name}</span>
 				</div>
 				<div className="card-content">
-					<p>{product.price}</p>
+					<p>₹ {product.price}</p>
 				</div>
 				<div className="card-action">
 					<Link href={'/product/[pid]'} as={`/product/${product._id}`}>
@@ -31,7 +31,7 @@ const Home = ({products}) => {
 }
 
 export const getStaticProps = async () => {
-	const res = await fetch('http://localhost:3000/api/products'); 
+	const res = await fetch(`${baseURL}/api/products`); 
 	const data = await res.json();
 	console.log(data)
 	return {
