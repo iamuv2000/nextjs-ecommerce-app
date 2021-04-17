@@ -1,0 +1,13 @@
+
+@media (min-width:600px) {
+	.rootCard{
+		display: flex;
+		flex-wrap: wrap;
+		/* justify-content: center; */
+	}
+	
+	.card {
+		max-width: 30vw;
+		margin: 20px;
+	}
+}
