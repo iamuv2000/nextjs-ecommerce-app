@@ -6,8 +6,19 @@
 		/* justify-content: center; */
 	}
 	
-	.card {
+	.card-p {
 		max-width: 30vw;
 		margin: 20px;
 	}
+}
+
+.authCard{
+	margin: 10px auto !important;
+	max-width: 500px !important;
+	padding: 20px;
+}
+
+input:focus{
+	border-bottom: 1px solid #1565c0 !important;
+	box-shadow: 0 1px 0 0 #1565c0 !important;
 }
