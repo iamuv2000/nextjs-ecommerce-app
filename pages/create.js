@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {useState} from 'react';
 import baseURL from '../helpers/baseURL';
+import { parseCookies } from "nookies";
 
 const CreatePage = () => {
 
@@ -45,5 +46,22 @@ const CreatePage = () => {
 		</form>
 	)
 }
+
+export const getServerSideProps = (ctx) => {
+	const cookie = parseCookies();
+	const user = cookie.user ? JSON.parse(cookie.user) : ''
+	if(user!='admin') {
+		const {res} = ctx;
+		res.writeHead(302, {Location : '/'});
+		res.end();
+	}
+
+	return {
+		props: {
+			
+		}
+	}
+}
+
 
 export default CreatePage;
