@@ -47,20 +47,28 @@ const CreatePage = () => {
 	)
 }
 
+// TODO: FIX THIS! (CODE CRASHING WHEN UNAUTHENTICATED USER VISITS CREATE)
 export const getServerSideProps = (ctx) => {
-	const cookie = parseCookies();
-	const user = cookie.user ? JSON.parse(cookie.user) : ''
-	if(user!='admin') {
+	try{
+		const cookie = parseCookies(ctx);
+		const user = cookie.user ? JSON.parse(cookie.user) : ''
+		if(user!='admin') {
+			const {res} = ctx;
+			res.writeHead(302, {Location : '/'});
+			res.end();
+		}
+	
+		return {
+			props: {
+				
+			}
+		}
+	} catch (e) {
 		const {res} = ctx;
 		res.writeHead(302, {Location : '/'});
 		res.end();
 	}
-
-	return {
-		props: {
-			
-		}
-	}
+	
 }
 
 

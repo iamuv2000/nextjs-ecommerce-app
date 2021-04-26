@@ -12,7 +12,7 @@ const Account = () => {
 
 
 export const getServerSideProps = (ctx) => {
-	const {token} = parseCookies()
+	const {token} = parseCookies(ctx)
 	if(!token) {
 		const {res} = ctx;
 		res.writeHead(302, {Location : '/login'});

@@ -7,8 +7,10 @@ initDB();
 
 export default async (req,res) => {
 	try{
+		console.log("Logging in...")
 		const { email, password} = req.body;
 		if(!email || !password) {
+			console.log("Please fill all fields")
 			return res.status(422).json({
 				"error" : "Please fill all fields"
 			});
@@ -23,7 +25,7 @@ export default async (req,res) => {
 		}
 
 		if(await bcrypt.compare(password , user.password)) {
-
+			
 			const token = jwt.sign({userId : user._id} , process.env.JWT_SECRET , {
 				expiresIn:"7d"
 			})

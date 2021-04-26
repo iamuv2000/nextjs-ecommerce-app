@@ -1,5 +1,6 @@
 import initDB from '../../helpers/initDB';
 import User from '../../models/User';
+import Cart from '../../models/Cart';
 import bcrypt from 'bcryptjs';
 
 initDB();
@@ -22,11 +23,18 @@ export default async (req,res) => {
 		}
 
 		const hasedPassword = await bcrypt.hash(password , 12);
+
+		// CREATE USER
 		const newUser = await new User({
 			name,
 			email,
 			password: hasedPassword
 		}).save()
+
+		// CREATE CART
+		await new Cart({
+			user : newUser._id
+		}).save();
 
 		console.log(newUser);
 

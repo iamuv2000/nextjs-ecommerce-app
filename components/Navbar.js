@@ -8,8 +8,8 @@ const NavBar = () => {
 
 	const router = useRouter();
 	const { token } = parseCookies();
-	const cookie = parseCookies();
-	const user = cookie.user ? JSON.parse(cookie.user) : ''
+	const cookies = parseCookies();
+	const user = cookies.user ? JSON.parse(cookies.user) : ''
 
 	const isActive = (route) => {
 		if (route === router.pathname) {
@@ -19,6 +19,7 @@ const NavBar = () => {
 
 	const logout = () => {
 		cookie.remove('token');
+		cookie.remove('user');
 		router.push('/login');
 	}
 

@@ -2,13 +2,17 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import baseURL from '../../helpers/baseURL';
-import {useRef , useEffect} from 'react';
+import {useRef , useEffect , useState} from 'react';
+import  {parseCookies} from 'nookies';
 
 const Product = ({ product }) => {
 
+	const [qty, setQty] = useState(1)
+
 	const router = useRouter();
 	const modalRef = useRef(null);
-
+	const cookie = parseCookies();
+	const user = cookie.user ? JSON.parse(cookie.user) : false;
 
 	useEffect(() => {
 		M.Modal.init(modalRef.current)
@@ -46,6 +50,23 @@ const Product = ({ product }) => {
 		router.push('/')
 	}
 
+	const addToCart = async () => {
+		const res = await fetch(`${baseURL}/api/product/${product._id}` , {
+			method: 'PUT',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : cookie.token
+			},
+			body : JSON.stringify({
+				quantity: qty,
+				productId : product._id
+			})
+		});
+		const data = await res.json();
+		console.log(data);
+		// router.push('/')
+	}
+
 	return (
 		<div className='container center-align'>
 			<h3>{product.name}</h3>
@@ -55,11 +76,27 @@ const Product = ({ product }) => {
 				margin: '10px'
 			}}
 				min="1"
+				value={qty}
+				onChange = {(e) => {
+					setQty(Number(e.target.value));
+				}}
 				placeholder='Quantity'
 			/>
-			<button className="btn waves-effect waves-light #1565c0 blue darken-3">Add
-    			<i className="material-icons right">add</i>
-			</button>
+			{
+				user
+				?
+				<button className="btn waves-effect waves-light #1565c0 blue darken-3"
+					onClick = {() => addToCart()}
+				>Add
+					<i className="material-icons right">add</i>
+				</button>
+				:
+				<button className="btn waves-effect waves-light #1565c0 blue darken-3"
+					onClick={()=>router.push('/login')}
+				>Login to add
+					<i className="material-icons right">add</i>
+				</button>
+			}
 
 			<h5>₹ {product.price}</h5>
 			<p className='left-align'>
