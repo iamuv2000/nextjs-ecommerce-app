@@ -51,7 +51,7 @@ const Product = ({ product }) => {
 	}
 
 	const addToCart = async () => {
-		const res = await fetch(`${baseURL}/api/product/${product._id}` , {
+		const res = await fetch(`${baseURL}/api/cart` , {
 			method: 'PUT',
 			headers : {
 				'Content-Type' : 'application/json',
@@ -119,29 +119,5 @@ export const getServerSideProps = async ({ params }) => {
 		}
 	}
 }
-
-
-// export const getStaticProps = async ({params}) => {
-// 	const res = await fetch('http://localhost:3000/api/product/'+params.pid); 
-// 	const data = await res.json();
-// 	return {
-// 		props:{
-// 			product: data
-// 		}
-// 	}
-// }
-
-// export const getStaticPath = async () => {
-// 	return {
-// 		paths : [
-// 			{
-// 				params : {
-
-// 				}
-// 			}
-// 		],
-// 		fallback: true
-// 	}
-// }
 
 export default Product;
