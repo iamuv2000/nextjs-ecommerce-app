@@ -64,7 +64,11 @@ const Product = ({ product }) => {
 		});
 		const data = await res.json();
 		console.log(data);
-		// router.push('/')
+		if(data.error) {
+			M.toast({html : data.error , classes : "red"});
+		} else {
+			M.toast({html : data.message , classes : "green"})
+		}
 	}
 
 	return (
