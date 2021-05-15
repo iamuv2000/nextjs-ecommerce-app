@@ -30,7 +30,18 @@ const Home = ({products}) => {
 	)
 }
 
-export const getStaticProps = async () => {
+// export const getStaticProps = async () => {
+// 	const res = await fetch(`${baseURL}/api/products`); 
+// 	const data = await res.json();
+// 	console.log(data)
+// 	return {
+// 		props:{
+// 			products: data
+// 		}
+// 	}
+// }
+
+export const getServerSideProps = async () => {
 	const res = await fetch(`${baseURL}/api/products`); 
 	const data = await res.json();
 	console.log(data)

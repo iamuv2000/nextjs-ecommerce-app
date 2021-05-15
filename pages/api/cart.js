@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
 import Cart from '../../models/Cart';
+import Authenticated from '../../helpers/Authenticated';
+import initDB from '../../helpers/initDB';
+
+initDB();
 
 export default async (req,res) => {
 	switch(req.method) {
@@ -17,21 +21,6 @@ export default async (req,res) => {
 }
 
 
-function Authenticated(icomponent) {
-	return (req,res)=>{
-		const {authorization}  = req.headers;
-		if(!authorization) {
-			return res.status(401).json({error: "You must login"})
-		}
-		try {
-			const {userId} = jwt.verify(authorization , process.env.JWT_SECRET);
-			req.userId = userId
-			return icomponent(req,res)
-		} catch (e) {
-			console.log(e.message)
-		}
-	}
-}
 
 // Fetch user cart
 const fetchUserCart = Authenticated(async (req,res) => {
